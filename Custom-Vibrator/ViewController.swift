@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     var touchStartTime: TimeInterval?
     var displayLink: CADisplayLink?
     
+    var recordedSegments: [(start: TimeInterval, end: TimeInterval)] = []
+
     
     private lazy var touchLabel: UILabel = {
         let label = UILabel()
@@ -60,6 +62,29 @@ class ViewController: UIViewController {
         let button = UIButton(configuration: config, primaryAction: nil)
         
         button.addTarget(self, action: #selector(resetTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var playButton: UIButton = {
+        
+        var attributedString = AttributedString("Play")
+        attributedString.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        
+        var config = UIButton.Configuration.filled()
+        config.attributedTitle = attributedString
+        config.image = UIImage(systemName: "play.fill")
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
+        config.imagePlacement = .leading
+        config.imagePadding = 4
+        config.background.cornerRadius = 24
+        config.baseBackgroundColor = UIColor.white
+        config.baseForegroundColor = .purple
+        config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
+        
+        let button = UIButton(configuration: config, primaryAction: nil)
+        
+        button.addTarget(self, action: #selector(playTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -116,10 +141,14 @@ class ViewController: UIViewController {
         view.addSubview(resetButton)
         view.addSubview(touchLabel)
         view.addSubview(timelineView)
+        view.addSubview(playButton)
         
         NSLayoutConstraint.activate([
             resetButton.leadingAnchor.constraint(equalTo: timelineView.leadingAnchor),
             resetButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            
+            playButton.trailingAnchor.constraint(equalTo: timelineView.trailingAnchor),
+            playButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
 
             touchLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             touchLabel.centerYAnchor.constraint(equalTo: resetButton.centerYAnchor),
@@ -167,12 +196,46 @@ class ViewController: UIViewController {
             subview.removeFromSuperview()
         }
         
+        displayLink?.invalidate()
+        displayLink =  nil
+        playHeaderView.frame.origin.x = 0
+        recordedSegments = []
         startTimeLine()
     }
     
+    @objc
+    private func playTapped() {
+        print("play tapped")
+        playHapticPattern(recordedSegments)
+    }
     
+    private func playHapticPattern(_ segments: [(start: TimeInterval, end: TimeInterval)]) {
+        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
+        
+        do {
+            try hapticEngine?.start()
+            
+            print("haptic running")
+            
+            let events: [CHHapticEvent] = segments.map { segment in
+                let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
+                let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5)
+                
+                return CHHapticEvent(eventType: .hapticContinuous, parameters: [intensity, sharpness], relativeTime: segment.start, duration: segment.end - segment.start)
+            }
+            
+            let pattern = try CHHapticPattern(events: events, parameters: [])
+            let player = try hapticEngine?.makePlayer(with: pattern)
+            try player?.start(atTime: 0)
+        } catch {
+            print("error to replay for \(error)")
+        }
+    }
+    
+    //MARK: - Touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("**touchesBegan")
+        playButton.isEnabled = false
         touchLabel.text = "Haptic Began"
         guard timelineStartTime != nil else { return }
         touchStartTime = CACurrentMediaTime()
@@ -182,12 +245,14 @@ class ViewController: UIViewController {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("**touchEnded")
         touchLabel.text = "Haptic Ended"
-
+        playButton.isEnabled = true
         guard let touchStart = touchStartTime, let globalStart = timelineStartTime else { return }
         
         let touchEnded = CACurrentMediaTime()
         let relativeStart = max(0, touchStart - globalStart)
         let relativeEnd = max(0, touchEnded - globalStart)
+        
+        recordedSegments.append((start: relativeStart, end: relativeEnd))
         
         addTouchReflection(from: relativeStart, to: relativeEnd)
         stopHaptic()
