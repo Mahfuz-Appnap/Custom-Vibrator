@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     var hapticPlayer: CHHapticAdvancedPatternPlayer?
     
     let totalDuration: TimeInterval = 10.0
-    var timelineStart: TimeInterval?
+    var timelineStartTime: TimeInterval?
+    var touchStartTime: TimeInterval?
     var displayLink: CADisplayLink?
     
     
@@ -28,7 +29,8 @@ class ViewController: UIViewController {
     private lazy var timelineView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.timelineBar
+        view.layer.cornerRadius = 4
         return view
     }()
     
@@ -37,16 +39,42 @@ class ViewController: UIViewController {
         view.backgroundColor = .red
         return view
     }()
+    
+    
+    private lazy var resetButton: UIButton = {
+        
+        var attributedString = AttributedString("Reset")
+        attributedString.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        
+        var config = UIButton.Configuration.filled()
+        config.attributedTitle = attributedString
+        config.image = UIImage(systemName: "stop.fill")
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
+        config.imagePlacement = .leading
+        config.imagePadding = 4
+        config.background.cornerRadius = 24
+        config.baseBackgroundColor = UIColor.white
+        config.baseForegroundColor = .purple
+        config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
+        
+        let button = UIButton(configuration: config, primaryAction: nil)
+        
+        button.addTarget(self, action: #selector(resetTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         print("hellow")
-        view.backgroundColor = UIColor.purple
+        view.backgroundColor = .bg
         setupUI()
         prepareHaptics()
     }
 
+    
     private func prepareHaptics() {
         guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
         do {
@@ -83,17 +111,23 @@ class ViewController: UIViewController {
         try? hapticPlayer?.stop(atTime: 0)
     }
     
+    //MARK: - SetupUI
     private func setupUI() {
+        view.addSubview(resetButton)
         view.addSubview(touchLabel)
         view.addSubview(timelineView)
+        
         NSLayoutConstraint.activate([
+            resetButton.leadingAnchor.constraint(equalTo: timelineView.leadingAnchor),
+            resetButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+
             touchLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            touchLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15),
+            touchLabel.centerYAnchor.constraint(equalTo: resetButton.centerYAnchor),
             
             timelineView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             timelineView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            timelineView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
-            timelineView.heightAnchor.constraint(equalToConstant: 20)
+            timelineView.bottomAnchor.constraint(equalTo: resetButton.topAnchor, constant: -10),
+            timelineView.heightAnchor.constraint(equalToConstant: 20),
         ])
         
         timelineView.addSubview(playHeaderView)
@@ -104,18 +138,19 @@ class ViewController: UIViewController {
     }
     
     private func startTimeLine() {
-        timelineStart = CACurrentMediaTime()
+        timelineStartTime = CACurrentMediaTime()
         displayLink = CADisplayLink(target: self, selector: #selector(updatePlayhead))
         displayLink?.add(to: .main, forMode: .default)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + totalDuration) {
             self.displayLink?.invalidate()
-            self.playHeaderView.removeFromSuperview()
+           // self.playHeaderView.removeFromSuperview()
         }
     }
 
-    @objc func updatePlayhead() {
-        guard let start = timelineStart else { return }
+    @objc
+    func updatePlayhead() {
+        guard let start = timelineStartTime else { return }
         let elapsedTime = CACurrentMediaTime() - start
         let progress = min(1, (elapsedTime / totalDuration))
         
@@ -124,19 +159,50 @@ class ViewController: UIViewController {
         playHeaderView.frame.origin.x = x
     }
     
+    @objc
+    private func resetTapped() {
+        print("reset tapped")
+        
+        timelineView.subviews.forEach { subview in
+            subview.removeFromSuperview()
+        }
+        
+        startTimeLine()
+    }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("**touchesBegan")
         touchLabel.text = "Haptic Began"
-        guard timelineStart != nil else { return }
+        guard timelineStartTime != nil else { return }
+        touchStartTime = CACurrentMediaTime()
         startHaptic()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("**touchEnded")
         touchLabel.text = "Haptic Ended"
+
+        guard let touchStart = touchStartTime, let globalStart = timelineStartTime else { return }
+        
+        let touchEnded = CACurrentMediaTime()
+        let relativeStart = max(0, touchStart - globalStart)
+        let relativeEnd = max(0, touchEnded - globalStart)
+        
+        addTouchReflection(from: relativeStart, to: relativeEnd)
         stopHaptic()
+        touchStartTime = nil
     }
     
+    private func addTouchReflection(from: TimeInterval, to: TimeInterval) {
+        let barWidth = timelineView.bounds.width
+        let startX = CGFloat(from / totalDuration) * barWidth
+        let width = CGFloat((to - from) / totalDuration) * barWidth
+        
+        let segment = UIView(frame: CGRect(x: startX, y: timelineView.bounds.height / 4, width: max(width, 1.5), height: timelineView.bounds.height / 2))
+        segment.backgroundColor = UIColor.segment
+        segment.layer.cornerRadius = 2
+        timelineView.addSubview(segment)
+    }
 }
 
