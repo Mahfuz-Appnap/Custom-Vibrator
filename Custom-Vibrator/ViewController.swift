@@ -20,7 +20,10 @@ class ViewController: UIViewController {
         
     var recordedSegments: [(start: TimeInterval, end: TimeInterval)] = []
 
+    private var isResetTapped: Bool = true
     
+    
+    //MARK: UI
     private lazy var touchLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -113,12 +116,6 @@ class ViewController: UIViewController {
             timelineView.bottomAnchor.constraint(equalTo: resetButton.topAnchor, constant: -10),
             timelineView.heightAnchor.constraint(equalToConstant: 20),
         ])
-        
-        timelineView.addSubview(playHeaderView)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.startTimeLine()
-        }
     }
 
 
@@ -203,13 +200,12 @@ class ViewController: UIViewController {
             subview.removeFromSuperview()
         }
         
+        isResetTapped = true
+        
         displayLink?.invalidate()
         displayLink =  nil
         playHeaderView.frame.origin.x = 0
         recordedSegments = []
-        
-        timelineView.addSubview(playHeaderView)
-        startTimeLine()
     }
     
     @objc
@@ -260,11 +256,18 @@ class ViewController: UIViewController {
     //MARK: - Touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("**touchesBegan")
+        
+        if isResetTapped {
+            timelineView.addSubview(playHeaderView)
+            startTimeLine()
+            isResetTapped = false
+        }
+        
         touchLabel.text = "Haptic Began"
         guard let touch = touches.first else { return }
         
         let location = touch.location(in: self.view)
-      //  highlightTouchArea(at: location)
+        highlightTouchArea(at: location)
         
         guard timelineStartTime != nil else { return }
         touchStartTime = CACurrentMediaTime()
