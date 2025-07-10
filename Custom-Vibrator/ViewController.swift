@@ -18,9 +18,11 @@ class ViewController: UIViewController {
     var touchStartTime: TimeInterval?
     var displayLink: CADisplayLink?
         
+    
     var recordedSegments: [(start: TimeInterval, end: TimeInterval)] = []
 
     private var isResetTapped: Bool = true
+    private var longTouchTimer: Timer?
     
     
     //MARK: UI
@@ -255,7 +257,7 @@ class ViewController: UIViewController {
     
     //MARK: - Touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("**touchesBegan")
+        print("\n\n**touchesBegan")
         
         if isResetTapped {
             timelineView.addSubview(playHeaderView)
@@ -265,13 +267,22 @@ class ViewController: UIViewController {
         
         touchLabel.text = "Haptic Began"
         guard let touch = touches.first else { return }
+
+        print("touch.tapCount: \(touch.tapCount)")
+        print("timestamp: \(touch.timestamp)")
+        print("touch type: \(touch.type)")
         
         let location = touch.location(in: self.view)
         highlightTouchArea(at: location)
         
+        longTouchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+            self?.showLongTouchRipple(at: location)
+        }
+        
         guard timelineStartTime != nil else { return }
         touchStartTime = CACurrentMediaTime()
         startHaptic()
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -287,13 +298,16 @@ class ViewController: UIViewController {
         
         addTouchReflection(from: relativeStart, to: relativeEnd)
         stopHaptic()
+        longTouchTimer?.invalidate()
+        longTouchTimer = nil
         touchStartTime = nil
+        clearAllRipples()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touchLocation = touches.first?.location(in: view) else { return }
         
-        showRipple(at: touchLocation)
+        showRippleForMovement(at: touchLocation)
     }
     
     private func addTouchReflection(from: TimeInterval, to: TimeInterval) {
@@ -307,7 +321,42 @@ class ViewController: UIViewController {
         timelineView.addSubview(segment)
     }
     
-    func showRipple(at point: CGPoint) {
+    func showLongTouchRipple(at point: CGPoint) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.createRippleRing(at: point)
+        }
+    }
+
+    func createRippleRing(at point: CGPoint) {
+        let diameter: CGFloat = 80
+        let ring = UIView(frame: CGRect(x: 0, y: 0, width: diameter, height: diameter))
+        ring.center = point
+        ring.layer.cornerRadius = diameter / 2
+        ring.layer.borderColor = UIColor.white.cgColor
+        ring.layer.borderWidth = 1
+        ring.alpha = 0.2
+        ring.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        ring.tag = 999
+        view.addSubview(ring)
+
+        UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseOut, .repeat]) {
+            ring.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+            ring.alpha = 0.0
+        } completion: { _ in
+            ring.removeFromSuperview()
+        }
+    }
+
+
+    private func clearAllRipples() {
+        self.view.subviews.forEach { subView in
+            if subView.tag == 999 {
+                subView.removeFromSuperview()
+            }
+        }
+    }
+    
+    func showRippleForMovement(at point: CGPoint) {
         let rippleSize: CGFloat = 60
         let ripple = UIView(frame: CGRect(x: 0, y: 0, width: rippleSize, height: rippleSize))
         ripple.center = point
@@ -317,7 +366,7 @@ class ViewController: UIViewController {
         ripple.backgroundColor = UIColor.clear
         view.addSubview(ripple)
         
-        UIView.animate(withDuration: 0.8, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             ripple.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
             ripple.alpha = 0.0
         }, completion: { _ in
