@@ -17,10 +17,10 @@ class ViewController: UIViewController {
     var timelineStartTime: TimeInterval?
     var touchStartTime: TimeInterval?
     var displayLink: CADisplayLink?
-        
+    
     
     var recordedSegments: [(start: TimeInterval, end: TimeInterval)] = []
-
+    
     private var isResetTapped: Bool = true
     private var longTouchTimer: Timer?
     
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
             
             playButton.trailingAnchor.constraint(equalTo: timelineView.trailingAnchor),
             playButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
-
+            
             touchLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             touchLabel.centerYAnchor.constraint(equalTo: resetButton.centerYAnchor),
             
@@ -119,18 +119,17 @@ class ViewController: UIViewController {
             timelineView.heightAnchor.constraint(equalToConstant: 20),
         ])
     }
-
-
+    
+    
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        print("hellow")
+        
         view.backgroundColor = .bg
         setupUI()
         prepareHaptics()
     }
-
+    
     
     private func prepareHaptics() {
         guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
@@ -163,12 +162,12 @@ class ViewController: UIViewController {
             print("could not start haptic engine!")
         }
     }
-
+    
     private func stopHaptic() {
         try? hapticPlayer?.stop(atTime: 0)
     }
     
-   
+    
     private func startTimeLine() {
         playButton.isEnabled = false
         timelineStartTime = CACurrentMediaTime()
@@ -178,10 +177,9 @@ class ViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + totalDuration) {
             self.displayLink?.invalidate()
             self.playButton.isEnabled = true
-           // self.playHeaderView.removeFromSuperview()
         }
     }
-
+    
     @objc
     func updatePlayhead() {
         guard let start = timelineStartTime else { return }
@@ -246,7 +244,7 @@ class ViewController: UIViewController {
                 
                 return CHHapticEvent(eventType: .hapticContinuous, parameters: [intensity, sharpness], relativeTime: segment.start, duration: segment.end - segment.start)
             }
-            
+                
             let pattern = try CHHapticPattern(events: events, parameters: [])
             let player = try hapticEngine?.makePlayer(with: pattern)
             try player?.start(atTime: 0)
@@ -255,61 +253,8 @@ class ViewController: UIViewController {
         }
     }
     
-    //MARK: - Touch
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("\n\n**touchesBegan")
-        
-        if isResetTapped {
-            timelineView.addSubview(playHeaderView)
-            startTimeLine()
-            isResetTapped = false
-        }
-        
-        touchLabel.text = "Haptic Began"
-        guard let touch = touches.first else { return }
-
-        print("touch.tapCount: \(touch.tapCount)")
-        print("timestamp: \(touch.timestamp)")
-        print("touch type: \(touch.type)")
-        
-        let location = touch.location(in: self.view)
-        highlightTouchArea(at: location)
-        
-        longTouchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
-            self?.showLongTouchRipple(at: location)
-        }
-        
-        guard timelineStartTime != nil else { return }
-        touchStartTime = CACurrentMediaTime()
-        startHaptic()
-        
-    }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("**touchEnded")
-        touchLabel.text = "Haptic Ended"
-        guard let touchStart = touchStartTime, let globalStart = timelineStartTime else { return }
-        
-        let touchEnded = CACurrentMediaTime()
-        let relativeStart = max(0, touchStart - globalStart)
-        let relativeEnd = max(0, touchEnded - globalStart)
-        
-        recordedSegments.append((start: relativeStart, end: relativeEnd))
-        
-        addTouchReflection(from: relativeStart, to: relativeEnd)
-        stopHaptic()
-        longTouchTimer?.invalidate()
-        longTouchTimer = nil
-        touchStartTime = nil
-        clearAllRipples()
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touchLocation = touches.first?.location(in: view) else { return }
-        
-        showRippleForMovement(at: touchLocation)
-    }
-    
+    //MARK: - Animation
     private func addTouchReflection(from: TimeInterval, to: TimeInterval) {
         let barWidth = timelineView.bounds.width
         let startX = CGFloat(from / totalDuration) * barWidth
@@ -322,11 +267,10 @@ class ViewController: UIViewController {
     }
     
     func showLongTouchRipple(at point: CGPoint) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.createRippleRing(at: point)
-        }
+        createRippleRing(at: point)
     }
-
+    
+    
     func createRippleRing(at point: CGPoint) {
         let diameter: CGFloat = 80
         let ring = UIView(frame: CGRect(x: 0, y: 0, width: diameter, height: diameter))
@@ -336,9 +280,7 @@ class ViewController: UIViewController {
         ring.layer.borderWidth = 1
         ring.alpha = 0.2
         ring.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        ring.tag = 999
-        view.addSubview(ring)
-
+        
         UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseOut, .repeat]) {
             ring.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
             ring.alpha = 0.0
@@ -346,8 +288,8 @@ class ViewController: UIViewController {
             ring.removeFromSuperview()
         }
     }
-
-
+    
+    
     private func clearAllRipples() {
         self.view.subviews.forEach { subView in
             if subView.tag == 999 {
@@ -373,7 +315,7 @@ class ViewController: UIViewController {
             ripple.removeFromSuperview()
         })
     }
-
+    
     
     private func highlightTouchArea(at point: CGPoint) {
         let circleSize: CGFloat = 100
@@ -381,21 +323,98 @@ class ViewController: UIViewController {
         circle.layer.cornerRadius = circleSize / 2
         circle.layer.borderColor = UIColor.whitesecondary.cgColor
         circle.layer.borderWidth = 2
-        circle.alpha = 0
+        circle.tag = 989
         self.view.addSubview(circle)
         
-        UIView.animate(withDuration: 0.2, animations: {
+        
+        let fixedCircle = UIView(frame: CGRect(x: point.x - circleSize / 2, y: point.y - circleSize / 2, width: circleSize, height: circleSize))
+        fixedCircle.layer.cornerRadius = circleSize / 2
+        fixedCircle.layer.borderColor = UIColor.whitesecondary.cgColor
+        fixedCircle.layer.borderWidth = 2
+        fixedCircle.tag = 988
+        self.view.addSubview(fixedCircle)
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            circle.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
+            circle.alpha = 0.0
+        }, completion: { _ in
+            circle.removeFromSuperview()
+        })
+        
+        /* UIView.animate(withDuration: 0.1, animations: {
             circle.alpha = 1
             circle.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         }) { _ in
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.1) {
                 circle.alpha = 0
                 circle.transform = CGAffineTransform.identity
-
+                
             } completion: { _ in
                 circle.removeFromSuperview()
             }
-        }
+        } */
     }
 }
 
+//MARK: - Touch
+extension ViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("\n\n**touchesBegan")
+        
+        if isResetTapped {
+            timelineView.addSubview(playHeaderView)
+            startTimeLine()
+            isResetTapped = false
+        }
+        
+        touchLabel.text = "Haptic Began"
+        guard let touch = touches.first else { return }
+        
+        print("touch.tapCount: \(touch.tapCount)")
+        print("timestamp: \(touch.timestamp)")
+        print("touch type: \(touch.type)")
+        
+        let location = touch.location(in: self.view)
+        highlightTouchArea(at: location)
+        
+        guard timelineStartTime != nil else { return }
+        touchStartTime = CACurrentMediaTime()
+        startHaptic()
+        
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("**touchEnded")
+        touchLabel.text = "Haptic Ended"
+        guard let touchStart = touchStartTime, let globalStart = timelineStartTime else { return }
+        
+        let touchEnded = CACurrentMediaTime()
+        let relativeStart = max(0, touchStart - globalStart)
+        let relativeEnd = max(0, touchEnded - globalStart)
+        
+        recordedSegments.append((start: relativeStart, end: relativeEnd))
+        
+        addTouchReflection(from: relativeStart, to: relativeEnd)
+        stopHaptic()
+        longTouchTimer?.invalidate()
+        longTouchTimer = nil
+        touchStartTime = nil
+        self.view.subviews.forEach { subview in
+            if subview.tag == 989 || subview.tag == 988 {
+                subview.removeFromSuperview()
+            }
+        }
+        clearAllRipples()
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touchLocation = touches.first?.location(in: view) else { return }
+        
+        self.view.subviews.forEach { subview in
+            if subview.tag == 988 {
+                subview.removeFromSuperview()
+            }
+        }
+        showRippleForMovement(at: touchLocation)
+    }
+}
