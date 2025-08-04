@@ -7,21 +7,22 @@
 
 import SwiftUI
 
+struct SettingItem: Identifiable {
+    let id = UUID()
+    let title: String
+    let iconName: String
+}
+
 struct SettingsView: View {
     
     let primaryColor = Color(red: 30 / 255, green: 0 / 255, blue: 60 / 255)
        let cardColor = Color(red: 53 / 255, green: 12 / 255, blue: 77 / 255)
     
-    struct SettingItem: Identifiable {
-        let id = UUID()
-        let title: String
-        let iconName: String
-    }
     
     private var settings: [SettingItem] = [
         SettingItem(title: "Contact Support", iconName: "contact"),
         SettingItem(title: "Terms and Conditions", iconName: "terms"),
-        SettingItem(title: "Privacy Policy", iconName: "privacy"),
+        SettingItem(title: "Privacy Policy", iconName: "rotate-cw"),
     ]
     
     

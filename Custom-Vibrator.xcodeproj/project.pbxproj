@@ -19,6 +19,7 @@
 		E922CB3B2E40ADC90084EB40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E922CB272E40ADC90084EB40 /* Assets.xcassets */; };
 		E922CB3C2E40ADC90084EB40 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E922CB282E40ADC90084EB40 /* Colors.xcassets */; };
 		E922CB3E2E40ADC90084EB40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E922CB2C2E40ADC90084EB40 /* LaunchScreen.storyboard */; };
+		E922CB402E40D10C0084EB40 /* NoVibratorFreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB3F2E40D10C0084EB40 /* NoVibratorFreeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		E922CB2E2E40ADC90084EB40 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E922CB2F2E40ADC90084EB40 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E922CB302E40ADC90084EB40 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E922CB3F2E40D10C0084EB40 /* NoVibratorFreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoVibratorFreeView.swift; sourceTree = "<group>"; };
 		E9DE39BC2E15291100892875 /* Custom-Vibrator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Custom-Vibrator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -68,6 +70,7 @@
 				E922CB2A2E40ADC90084EB40 /* Info.plist */,
 				E922CB2C2E40ADC90084EB40 /* LaunchScreen.storyboard */,
 				E922CB2D2E40ADC90084EB40 /* NoVibratorView.swift */,
+				E922CB3F2E40D10C0084EB40 /* NoVibratorFreeView.swift */,
 				E922CB2F2E40ADC90084EB40 /* SettingsView.swift */,
 				E922CB302E40ADC90084EB40 /* ViewController.swift */,
 				E922CB252E40ADC90084EB40 /* Extension */,
@@ -169,6 +172,7 @@
 			files = (
 				E922CB322E40ADC90084EB40 /* BackGroundViewModifier.swift in Sources */,
 				E922CB332E40ADC90084EB40 /* Extension+Color.swift in Sources */,
+				E922CB402E40D10C0084EB40 /* NoVibratorFreeView.swift in Sources */,
 				E922CB342E40ADC90084EB40 /* HomeView.swift in Sources */,
 				E922CB352E40ADC90084EB40 /* AppDelegate.swift in Sources */,
 				E922CB362E40ADC90084EB40 /* Constants.swift in Sources */,

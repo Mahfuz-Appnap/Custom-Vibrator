@@ -163,9 +163,6 @@ class ViewController: UIViewController {
             .foregroundColor: UIColor.white,
             .font: UIFont.boldSystemFont(ofSize: 18)
         ]
-//        appearance.largeTitleTextAttributes = [
-//            .foregroundColor: UIColor.systemBlue
-//        ]
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
