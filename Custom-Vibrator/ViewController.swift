@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreHaptics
+import SwiftUI
 
 class ViewController: UIViewController {
     
@@ -26,6 +27,23 @@ class ViewController: UIViewController {
     
     
     //MARK: UI
+    private lazy var touchArea: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .surfaceBg
+        return view
+    }()
+    
+    private lazy var bottomArea: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 24
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view.layer.masksToBounds = true
+        view.backgroundColor = UIColor.bg
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var touchLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -95,28 +113,40 @@ class ViewController: UIViewController {
         return button
     }()
     
-    
+
     //MARK: - SetupUI
     private func setupUI() {
-        view.addSubview(resetButton)
+        view.addSubview(touchArea)
+        view.addSubview(bottomArea)
         view.addSubview(touchLabel)
-        view.addSubview(timelineView)
         view.addSubview(playButton)
+        view.addSubview(timelineView)
+        view.addSubview(resetButton)
         
         NSLayoutConstraint.activate([
-            resetButton.leadingAnchor.constraint(equalTo: timelineView.leadingAnchor),
-            resetButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            touchArea.topAnchor.constraint(equalTo: self.view.topAnchor),
+            touchArea.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            touchArea.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            touchArea.bottomAnchor.constraint(equalTo: bottomArea.topAnchor, constant: 0),
             
-            playButton.trailingAnchor.constraint(equalTo: timelineView.trailingAnchor),
-            playButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
-            
-            touchLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            touchLabel.centerYAnchor.constraint(equalTo: resetButton.centerYAnchor),
+            bottomArea.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            bottomArea.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            bottomArea.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            bottomArea.heightAnchor.constraint(equalToConstant: self.view.bounds.height * (170/896)),
             
             timelineView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             timelineView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            timelineView.bottomAnchor.constraint(equalTo: resetButton.topAnchor, constant: -10),
+            timelineView.topAnchor.constraint(equalTo: bottomArea.topAnchor, constant: 16),
             timelineView.heightAnchor.constraint(equalToConstant: 20),
+
+            resetButton.leadingAnchor.constraint(equalTo: timelineView.leadingAnchor),
+            resetButton.topAnchor.constraint(equalTo: timelineView.bottomAnchor, constant: 24),
+                        
+            playButton.trailingAnchor.constraint(equalTo: timelineView.trailingAnchor),
+            playButton.centerYAnchor.constraint(equalTo: resetButton.centerYAnchor),
+            
+            touchLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            touchLabel.centerYAnchor.constraint(equalTo: resetButton.centerYAnchor),
         ])
     }
     
@@ -125,9 +155,27 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .bg
-        setupUI()
-        prepareHaptics()
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .clear
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.boldSystemFont(ofSize: 18)
+        ]
+//        appearance.largeTitleTextAttributes = [
+//            .foregroundColor: UIColor.systemBlue
+//        ]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        let uiHostingController = UIHostingController(rootView: NoVibratorView())
+
+        navigationController?.pushViewController(uiHostingController, animated: true)
+//        view.backgroundColor = .bg
+//        setupUI()
+//        prepareHaptics()
     }
     
     
@@ -139,7 +187,6 @@ class ViewController: UIViewController {
         } catch {
             print("could not access haptic")
         }
-        
     }
     
     private func startHaptic() {
@@ -318,48 +365,47 @@ class ViewController: UIViewController {
     
     
     private func highlightTouchArea(at point: CGPoint) {
-        let circleSize: CGFloat = 100
-        let circle = UIView(frame: CGRect(x: point.x - circleSize / 2, y: point.y - circleSize / 2, width: circleSize, height: circleSize))
-        circle.layer.cornerRadius = circleSize / 2
-        circle.layer.borderColor = UIColor.whitesecondary.cgColor
-        circle.layer.borderWidth = 2
-        circle.tag = 989
-        self.view.addSubview(circle)
+        let circleSize: CGFloat = 65
         
+        let rippleContainer = UIView(frame: CGRect(x: 0, y: 0, width: circleSize, height: circleSize))
+        rippleContainer.center = point
+        rippleContainer.tag = 888
+        self.view.addSubview(rippleContainer)
         
-        let fixedCircle = UIView(frame: CGRect(x: point.x - circleSize / 2, y: point.y - circleSize / 2, width: circleSize, height: circleSize))
-        fixedCircle.layer.cornerRadius = circleSize / 2
-        fixedCircle.layer.borderColor = UIColor.whitesecondary.cgColor
-        fixedCircle.layer.borderWidth = 2
-        fixedCircle.tag = 988
-        self.view.addSubview(fixedCircle)
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            circle.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
-            circle.alpha = 0.0
-        }, completion: { _ in
-            circle.removeFromSuperview()
-        })
-        
-        /* UIView.animate(withDuration: 0.1, animations: {
-            circle.alpha = 1
-            circle.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        }) { _ in
-            UIView.animate(withDuration: 0.1) {
-                circle.alpha = 0
-                circle.transform = CGAffineTransform.identity
-                
-            } completion: { _ in
-                circle.removeFromSuperview()
-            }
-        } */
+        for i in 0..<4 {
+            let ripple = UIView(frame: rippleContainer.bounds)
+            ripple.layer.cornerRadius = circleSize / 2
+            ripple.layer.borderColor = UIColor.whitesecondary.cgColor
+            ripple.layer.borderWidth = 2
+            ripple.alpha = 0.0
+            rippleContainer.addSubview(ripple)
+            
+            let delay = CFTimeInterval(i) * 0.15
+            
+            let animationGroup = CAAnimationGroup()
+            animationGroup.beginTime = CACurrentMediaTime() + delay
+            animationGroup.duration = 0.2
+            animationGroup.repeatCount = .infinity
+            animationGroup.autoreverses = false
+            animationGroup.isRemovedOnCompletion = false
+            
+            let scaleAnim = CABasicAnimation(keyPath: "transform.scale")
+            scaleAnim.fromValue = 1.0
+            scaleAnim.toValue = 2.5
+            
+            let alphaAnim = CABasicAnimation(keyPath: "opacity")
+            alphaAnim.fromValue = 0.6
+            alphaAnim.toValue = 0.0
+            
+            animationGroup.animations = [scaleAnim, alphaAnim]
+            ripple.layer.add(animationGroup, forKey: "ripple")
+        }
     }
 }
 
 //MARK: - Touch
 extension ViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("\n\n**touchesBegan")
         
         if isResetTapped {
             timelineView.addSubview(playHeaderView)
@@ -367,25 +413,21 @@ extension ViewController {
             isResetTapped = false
         }
         
-        touchLabel.text = "Haptic Began"
         guard let touch = touches.first else { return }
-        
-        print("touch.tapCount: \(touch.tapCount)")
-        print("timestamp: \(touch.timestamp)")
-        print("touch type: \(touch.type)")
-        
         let location = touch.location(in: self.view)
-        highlightTouchArea(at: location)
         
-        guard timelineStartTime != nil else { return }
-        touchStartTime = CACurrentMediaTime()
-        startHaptic()
-        
+        if touchArea.frame.contains(location) {
+            
+            guard timelineStartTime != nil else { return }
+            touchStartTime = CACurrentMediaTime()
+            startHaptic()
+            
+            highlightTouchArea(at: location)
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("**touchEnded")
-        touchLabel.text = "Haptic Ended"
+        touchLabel.text = "Touch Ended"
         guard let touchStart = touchStartTime, let globalStart = timelineStartTime else { return }
         
         let touchEnded = CACurrentMediaTime()
@@ -394,13 +436,15 @@ extension ViewController {
         
         recordedSegments.append((start: relativeStart, end: relativeEnd))
         
-        addTouchReflection(from: relativeStart, to: relativeEnd)
+        UIView.animate(withDuration: 0.3) {
+            self.addTouchReflection(from: relativeStart, to: relativeEnd)
+        }
         stopHaptic()
         longTouchTimer?.invalidate()
         longTouchTimer = nil
         touchStartTime = nil
         self.view.subviews.forEach { subview in
-            if subview.tag == 989 || subview.tag == 988 {
+            if subview.tag == 999 || subview.tag == 888 {
                 subview.removeFromSuperview()
             }
         }
@@ -411,7 +455,7 @@ extension ViewController {
         guard let touchLocation = touches.first?.location(in: view) else { return }
         
         self.view.subviews.forEach { subview in
-            if subview.tag == 988 {
+            if subview.tag == 888 {
                 subview.removeFromSuperview()
             }
         }

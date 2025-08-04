@@ -6,30 +6,37 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E922CB322E40ADC90084EB40 /* BackGroundViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB222E40ADC90084EB40 /* BackGroundViewModifier.swift */; };
+		E922CB332E40ADC90084EB40 /* Extension+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB232E40ADC90084EB40 /* Extension+Color.swift */; };
+		E922CB342E40ADC90084EB40 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB242E40ADC90084EB40 /* HomeView.swift */; };
+		E922CB352E40ADC90084EB40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB262E40ADC90084EB40 /* AppDelegate.swift */; };
+		E922CB362E40ADC90084EB40 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB292E40ADC90084EB40 /* Constants.swift */; };
+		E922CB372E40ADC90084EB40 /* NoVibratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB2D2E40ADC90084EB40 /* NoVibratorView.swift */; };
+		E922CB382E40ADC90084EB40 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB2E2E40ADC90084EB40 /* SceneDelegate.swift */; };
+		E922CB392E40ADC90084EB40 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB2F2E40ADC90084EB40 /* SettingsView.swift */; };
+		E922CB3A2E40ADC90084EB40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB302E40ADC90084EB40 /* ViewController.swift */; };
+		E922CB3B2E40ADC90084EB40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E922CB272E40ADC90084EB40 /* Assets.xcassets */; };
+		E922CB3C2E40ADC90084EB40 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E922CB282E40ADC90084EB40 /* Colors.xcassets */; };
+		E922CB3E2E40ADC90084EB40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E922CB2C2E40ADC90084EB40 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		E922CB222E40ADC90084EB40 /* BackGroundViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackGroundViewModifier.swift; sourceTree = "<group>"; };
+		E922CB232E40ADC90084EB40 /* Extension+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Color.swift"; sourceTree = "<group>"; };
+		E922CB242E40ADC90084EB40 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E922CB262E40ADC90084EB40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E922CB272E40ADC90084EB40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E922CB282E40ADC90084EB40 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		E922CB292E40ADC90084EB40 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E922CB2A2E40ADC90084EB40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E922CB2B2E40ADC90084EB40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E922CB2D2E40ADC90084EB40 /* NoVibratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoVibratorView.swift; sourceTree = "<group>"; };
+		E922CB2E2E40ADC90084EB40 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E922CB2F2E40ADC90084EB40 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E922CB302E40ADC90084EB40 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E9DE39BC2E15291100892875 /* Custom-Vibrator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Custom-Vibrator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		E9DE39CE2E15291300892875 /* Exceptions for "Custom-Vibrator" folder in "Custom-Vibrator" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = E9DE39BB2E15291100892875 /* Custom-Vibrator */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		E9DE39BE2E15291100892875 /* Custom-Vibrator */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				E9DE39CE2E15291300892875 /* Exceptions for "Custom-Vibrator" folder in "Custom-Vibrator" target */,
-			);
-			path = "Custom-Vibrator";
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E9DE39B92E15291100892875 /* Frameworks */ = {
@@ -42,10 +49,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E922CB252E40ADC90084EB40 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				E922CB222E40ADC90084EB40 /* BackGroundViewModifier.swift */,
+				E922CB242E40ADC90084EB40 /* HomeView.swift */,
+				E922CB292E40ADC90084EB40 /* Constants.swift */,
+				E922CB232E40ADC90084EB40 /* Extension+Color.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		E922CB312E40ADC90084EB40 /* Custom-Vibrator */ = {
+			isa = PBXGroup;
+			children = (
+				E922CB262E40ADC90084EB40 /* AppDelegate.swift */,
+				E922CB2E2E40ADC90084EB40 /* SceneDelegate.swift */,
+				E922CB2A2E40ADC90084EB40 /* Info.plist */,
+				E922CB2C2E40ADC90084EB40 /* LaunchScreen.storyboard */,
+				E922CB2D2E40ADC90084EB40 /* NoVibratorView.swift */,
+				E922CB2F2E40ADC90084EB40 /* SettingsView.swift */,
+				E922CB302E40ADC90084EB40 /* ViewController.swift */,
+				E922CB252E40ADC90084EB40 /* Extension */,
+				E922CB272E40ADC90084EB40 /* Assets.xcassets */,
+				E922CB282E40ADC90084EB40 /* Colors.xcassets */,
+			);
+			path = "Custom-Vibrator";
+			sourceTree = "<group>";
+		};
 		E9DE39B32E15291100892875 = {
 			isa = PBXGroup;
 			children = (
-				E9DE39BE2E15291100892875 /* Custom-Vibrator */,
+				E922CB312E40ADC90084EB40 /* Custom-Vibrator */,
 				E9DE39BD2E15291100892875 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,9 +107,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				E9DE39BE2E15291100892875 /* Custom-Vibrator */,
 			);
 			name = "Custom-Vibrator";
 			packageProductDependencies = (
@@ -122,6 +154,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E922CB3B2E40ADC90084EB40 /* Assets.xcassets in Resources */,
+				E922CB3C2E40ADC90084EB40 /* Colors.xcassets in Resources */,
+				E922CB3E2E40ADC90084EB40 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,10 +167,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E922CB322E40ADC90084EB40 /* BackGroundViewModifier.swift in Sources */,
+				E922CB332E40ADC90084EB40 /* Extension+Color.swift in Sources */,
+				E922CB342E40ADC90084EB40 /* HomeView.swift in Sources */,
+				E922CB352E40ADC90084EB40 /* AppDelegate.swift in Sources */,
+				E922CB362E40ADC90084EB40 /* Constants.swift in Sources */,
+				E922CB372E40ADC90084EB40 /* NoVibratorView.swift in Sources */,
+				E922CB382E40ADC90084EB40 /* SceneDelegate.swift in Sources */,
+				E922CB392E40ADC90084EB40 /* SettingsView.swift in Sources */,
+				E922CB3A2E40ADC90084EB40 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E922CB2C2E40ADC90084EB40 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E922CB2B2E40ADC90084EB40 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E9DE39D02E15291300892875 /* Debug */ = {
