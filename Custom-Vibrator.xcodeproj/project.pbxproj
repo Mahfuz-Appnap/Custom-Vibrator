@@ -7,28 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E90DD79F2E4CADA90038A0A1 /* GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DD79E2E4CADA90038A0A1 /* GeometryReader.swift */; };
 		E922CB322E40ADC90084EB40 /* BackGroundViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB222E40ADC90084EB40 /* BackGroundViewModifier.swift */; };
 		E922CB332E40ADC90084EB40 /* Extension+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB232E40ADC90084EB40 /* Extension+Color.swift */; };
-		E922CB342E40ADC90084EB40 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB242E40ADC90084EB40 /* HomeView.swift */; };
+		E922CB342E40ADC90084EB40 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB242E40ADC90084EB40 /* BackgroundView.swift */; };
 		E922CB352E40ADC90084EB40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB262E40ADC90084EB40 /* AppDelegate.swift */; };
 		E922CB362E40ADC90084EB40 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB292E40ADC90084EB40 /* Constants.swift */; };
 		E922CB382E40ADC90084EB40 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB2E2E40ADC90084EB40 /* SceneDelegate.swift */; };
 		E922CB3A2E40ADC90084EB40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB302E40ADC90084EB40 /* ViewController.swift */; };
-		E922CB3B2E40ADC90084EB40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E922CB272E40ADC90084EB40 /* Assets.xcassets */; };
-		E922CB3C2E40ADC90084EB40 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E922CB282E40ADC90084EB40 /* Colors.xcassets */; };
 		E922CB3E2E40ADC90084EB40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E922CB2C2E40ADC90084EB40 /* LaunchScreen.storyboard */; };
 		E922CB462E40D92C0084EB40 /* NoVibratorFreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB422E40D92C0084EB40 /* NoVibratorFreeView.swift */; };
 		E922CB472E40D92C0084EB40 /* NoVibratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB432E40D92C0084EB40 /* NoVibratorView.swift */; };
 		E922CB482E40D92C0084EB40 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922CB442E40D92C0084EB40 /* SettingsView.swift */; };
+		E94AA4392E5191DB001D2288 /* CreatePatternView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94AA4382E5191DB001D2288 /* CreatePatternView.swift */; };
+		E94AA43B2E51E195001D2288 /* Extension+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94AA43A2E51E195001D2288 /* Extension+View.swift */; };
+		E96913532E4DDF9B0080541C /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96913522E4DDF9B0080541C /* Font+Extensions.swift */; };
+		E9E3D2362E546731008981B9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E3D2352E546731008981B9 /* HomeView.swift */; };
+		E9E3D2382E548E13008981B9 /* SegementedControlSwiftui.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E3D2372E548E13008981B9 /* SegementedControlSwiftui.swift */; };
+		E9E3D23A2E54905C008981B9 /* PatternView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E3D2392E54905C008981B9 /* PatternView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E90DD79E2E4CADA90038A0A1 /* GeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryReader.swift; sourceTree = "<group>"; };
 		E922CB222E40ADC90084EB40 /* BackGroundViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackGroundViewModifier.swift; sourceTree = "<group>"; };
 		E922CB232E40ADC90084EB40 /* Extension+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Color.swift"; sourceTree = "<group>"; };
-		E922CB242E40ADC90084EB40 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E922CB242E40ADC90084EB40 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		E922CB262E40ADC90084EB40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E922CB272E40ADC90084EB40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E922CB282E40ADC90084EB40 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E922CB292E40ADC90084EB40 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E922CB2A2E40ADC90084EB40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E922CB2B2E40ADC90084EB40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -37,8 +41,22 @@
 		E922CB422E40D92C0084EB40 /* NoVibratorFreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoVibratorFreeView.swift; sourceTree = "<group>"; };
 		E922CB432E40D92C0084EB40 /* NoVibratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoVibratorView.swift; sourceTree = "<group>"; };
 		E922CB442E40D92C0084EB40 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E94AA4382E5191DB001D2288 /* CreatePatternView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePatternView.swift; sourceTree = "<group>"; };
+		E94AA43A2E51E195001D2288 /* Extension+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+View.swift"; sourceTree = "<group>"; };
+		E96913522E4DDF9B0080541C /* Font+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
 		E9DE39BC2E15291100892875 /* Custom-Vibrator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Custom-Vibrator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9E3D2352E546731008981B9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E9E3D2372E548E13008981B9 /* SegementedControlSwiftui.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegementedControlSwiftui.swift; sourceTree = "<group>"; };
+		E9E3D2392E54905C008981B9 /* PatternView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		E96913292E4DDCAB0080541C /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E9DE39B92E15291100892875 /* Frameworks */ = {
@@ -54,10 +72,13 @@
 		E922CB252E40ADC90084EB40 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				E9E3D2372E548E13008981B9 /* SegementedControlSwiftui.swift */,
 				E922CB222E40ADC90084EB40 /* BackGroundViewModifier.swift */,
-				E922CB242E40ADC90084EB40 /* HomeView.swift */,
+				E922CB242E40ADC90084EB40 /* BackgroundView.swift */,
 				E922CB292E40ADC90084EB40 /* Constants.swift */,
 				E922CB232E40ADC90084EB40 /* Extension+Color.swift */,
+				E96913522E4DDF9B0080541C /* Font+Extensions.swift */,
+				E94AA43A2E51E195001D2288 /* Extension+View.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -69,11 +90,14 @@
 				E922CB2E2E40ADC90084EB40 /* SceneDelegate.swift */,
 				E922CB2A2E40ADC90084EB40 /* Info.plist */,
 				E922CB2C2E40ADC90084EB40 /* LaunchScreen.storyboard */,
+				E9E3D2392E54905C008981B9 /* PatternView.swift */,
+				E9E3D2352E546731008981B9 /* HomeView.swift */,
+				E94AA4382E5191DB001D2288 /* CreatePatternView.swift */,
 				E922CB452E40D92C0084EB40 /* SettingView */,
 				E922CB302E40ADC90084EB40 /* ViewController.swift */,
 				E922CB252E40ADC90084EB40 /* Extension */,
-				E922CB272E40ADC90084EB40 /* Assets.xcassets */,
-				E922CB282E40ADC90084EB40 /* Colors.xcassets */,
+				E96913292E4DDCAB0080541C /* Resources */,
+				E90DD79E2E4CADA90038A0A1 /* GeometryReader.swift */,
 			);
 			path = "Custom-Vibrator";
 			sourceTree = "<group>";
@@ -118,6 +142,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E96913292E4DDCAB0080541C /* Resources */,
 			);
 			name = "Custom-Vibrator";
 			packageProductDependencies = (
@@ -165,8 +192,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E922CB3B2E40ADC90084EB40 /* Assets.xcassets in Resources */,
-				E922CB3C2E40ADC90084EB40 /* Colors.xcassets in Resources */,
 				E922CB3E2E40ADC90084EB40 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,11 +205,18 @@
 			files = (
 				E922CB322E40ADC90084EB40 /* BackGroundViewModifier.swift in Sources */,
 				E922CB332E40ADC90084EB40 /* Extension+Color.swift in Sources */,
-				E922CB342E40ADC90084EB40 /* HomeView.swift in Sources */,
+				E922CB342E40ADC90084EB40 /* BackgroundView.swift in Sources */,
+				E9E3D2362E546731008981B9 /* HomeView.swift in Sources */,
 				E922CB352E40ADC90084EB40 /* AppDelegate.swift in Sources */,
 				E922CB362E40ADC90084EB40 /* Constants.swift in Sources */,
+				E9E3D2382E548E13008981B9 /* SegementedControlSwiftui.swift in Sources */,
 				E922CB382E40ADC90084EB40 /* SceneDelegate.swift in Sources */,
+				E9E3D23A2E54905C008981B9 /* PatternView.swift in Sources */,
+				E96913532E4DDF9B0080541C /* Font+Extensions.swift in Sources */,
 				E922CB3A2E40ADC90084EB40 /* ViewController.swift in Sources */,
+				E90DD79F2E4CADA90038A0A1 /* GeometryReader.swift in Sources */,
+				E94AA4392E5191DB001D2288 /* CreatePatternView.swift in Sources */,
+				E94AA43B2E51E195001D2288 /* Extension+View.swift in Sources */,
 				E922CB462E40D92C0084EB40 /* NoVibratorFreeView.swift in Sources */,
 				E922CB472E40D92C0084EB40 /* NoVibratorView.swift in Sources */,
 				E922CB482E40D92C0084EB40 /* SettingsView.swift in Sources */,

@@ -56,7 +56,6 @@ struct SettingsView: View {
             }
         }
         .withGradientBackground()
-        
     }
 }
 
@@ -73,6 +72,7 @@ struct SettingRow: View {
                     .frame(width: 24, height: 24)
                 
                 Text(title)
+                    .font(PoppinFont.swiftui(.semibold, size: 16))
                     .foregroundStyle(.white)
             }
             
@@ -80,15 +80,17 @@ struct SettingRow: View {
             
             Image(systemName: "chevron.right")
                 .foregroundStyle(.white)
+                .frame(width: 24, height: 24)
         }
-        .font(.body.weight(.bold))
-        .padding(.trailing, 20)
+        //.padding(.trailing, 20)
         .padding(.vertical, 12)
+//        .background(.red)
+        .padding(0)
     }
 }
 
 
 
 #Preview {
-    SettingsView()
+    NoVibratorFreeView()
 }

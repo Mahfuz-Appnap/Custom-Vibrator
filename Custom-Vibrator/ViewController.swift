@@ -167,10 +167,10 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
-        let uiHostingController = UIHostingController(rootView: NoVibratorView())
+        let uiHostingController = UIHostingController(rootView: PatternView())
 
         navigationController?.pushViewController(uiHostingController, animated: true)
-//        view.backgroundColor = .bg
+        view.backgroundColor = .bg
 //        setupUI()
 //        prepareHaptics()
     }

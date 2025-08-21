@@ -9,13 +9,43 @@ import SwiftUI
 
 struct NoVibratorView: View {
     
+    
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    
     @State private var selectedIndex = 0
 
     let carouselImages = ["noVibrator", "noVibrator2"]
     
     
     var body: some View {
+        
+        var sizeText: String {
+            if horizontalSizeClass == .compact && verticalSizeClass == .regular {
+                return "Phone is in Portrait Position"
+            }
+            
+            else if horizontalSizeClass == .regular && verticalSizeClass == .compact {
+                return "Landscape Position"
+            }
+            
+            else if horizontalSizeClass == .regular && verticalSizeClass == .regular {
+                // This is iPad
+                return "This is iPad"
+            }
+            else {
+                return "Undefined phone"
+            }
+        }
+        
+        
+        
         ZStack(alignment: .top) {
+            
+            VStack {
+                Text(sizeText)
+                    
+            }
             
             VStack(spacing: 100) {
                 VStack(spacing: 30) {
@@ -55,7 +85,7 @@ struct NoVibratorView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                 }
-                .background(Color(red: 1, green: 0.4, blue: 0.7))
+                .background(Color.buttonSecondary)
                 .clipShape(.capsule)
                 .padding(.horizontal, 20)
             }

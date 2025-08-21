@@ -10,7 +10,7 @@ import SwiftUI
 struct BackGroundViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         ZStack {
-            HomeView()
+            BackgroundView()
             content
         }
     }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct BackgroundView: View {
 
     let colors = [
         Color(red: 0.55, green: 0.34, blue: 1),
@@ -23,7 +23,7 @@ struct HomeView: View {
                 RadialGradient(colors: colors,
                                center: .top, startRadius: 180, endRadius: 5)
                 .frame(maxWidth: .infinity)
-                .frame(height: 100)
+                .frame(height: 30)
                 .blur(radius: 100)
                 .edgesIgnoringSafeArea(.all)
                 
@@ -32,7 +32,7 @@ struct HomeView: View {
                 RadialGradient(colors: colors,
                                center: .bottom, startRadius: 180, endRadius: 5)
                 .frame(maxWidth: .infinity)
-                .frame(height: 80)
+                .frame(height: 30)
                 .blur(radius: 100)
                 .edgesIgnoringSafeArea(.all)
             }
@@ -41,5 +41,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    BackgroundView()
 }
