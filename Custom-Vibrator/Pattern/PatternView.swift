@@ -179,7 +179,6 @@ struct PatternCard: View {
                     Spacer()
                     VStack(alignment: .trailing) {
                         Image("premium")
-                            .foregroundStyle(.yellow)
                         Spacer()
                     }
                     .padding(.vertical, -6)
@@ -187,7 +186,6 @@ struct PatternCard: View {
                 .padding(.horizontal, -6)
             }
         }
-//        .frame(height: 104)
         .animation(.easeInOut(duration: 0.2), value: isSelected)
     }
 }
